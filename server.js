@@ -111,6 +111,50 @@ app.get('/api/spotify/search', async (req, res) => {
 /*  Routes                                                             */
 /* ------------------------------------------------------------------ */
 
+// ICE servers for WebRTC. Google STUN is always included; TURN relay servers
+// (needed for calls between different networks) come from the TURN_ICE_SERVERS
+// environment variable - paste the JSON array your TURN provider gives you.
+app.get('/api/turn', (req, res) => {
+  const iceServers = [
+    { urls: 'stun:stun.l.google.com:19302' },
+    { urls: 'stun:stun1.l.google.com:19302' },
+  ];
+  if (process.env.TURN_ICE_SERVERS) {
+    try {
+      const extra = JSON.parse(process.env.TURN_ICE_SERVERS);
+      if (Array.isArray(extra)) iceServers.push(...extra);
+    } catch (e) {
+      console.warn('TURN_ICE_SERVERS is not valid JSON - ignoring.');
+    }
+  }
+  res.json({ iceServers });
+});
+
+// Recover a playable 30-second preview from Spotify's embed page. The Web API
+// stopped returning preview_url for newer apps, but the embed still exposes an
+// mp3 preview, so shared in-call playback keeps working.
+app.get('/api/spotify/preview', async (req, res) => {
+  const id = (req.query.id || '').toString().replace(/[^a-zA-Z0-9]/g, '');
+  if (!id) return res.json({ previewUrl: null });
+  try {
+    const resp = await fetch('https://open.spotify.com/embed/track/' + id, {
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; MeetSpotify/1.0)' },
+    });
+    const html = await resp.text();
+    let url = null;
+    const key = '"audioPreview":{"url":"';
+    const i = html.indexOf(key);
+    if (i !== -1) url = html.slice(i + key.length, html.indexOf('"', i + key.length));
+    if (!url) {
+      const j = html.indexOf('p.scdn.co/mp3-preview/');
+      if (j !== -1) url = 'https://' + html.slice(j, html.indexOf('"', j));
+    }
+    res.json({ previewUrl: url || null });
+  } catch (e) {
+    res.json({ previewUrl: null });
+  }
+});
+
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
 app.get('/room/:id', (req, res) => res.sendFile(path.join(__dirname, 'public', 'room.html')));
 // Spotify redirects the host's browser back here after login.
