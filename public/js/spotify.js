@@ -92,7 +92,7 @@ window.Music = (function () {
     state.isHost = isHost;
     $('spRole').textContent = isHost ? 'Host' : 'Guest';
     $('spRole').className = 'role-tag ' + (isHost ? 'host' : 'guest');
-    $('spHostLogin').classList.toggle('hidden', !isHost || state.premium);
+    $('spHostLogin').classList.add('hidden'); // Full-track sharing isn't possible (Spotify DRM); everyone uses the synced preview.
     $('spRequestsWrap').classList.toggle('hidden', !isHost);
     $('npControls').style.display = isHost ? 'flex' : 'none';
     // re-render current results so Play/Request buttons match role
@@ -201,8 +201,6 @@ window.Music = (function () {
       MeetApp.toast('No preview available for this track. Open it in Spotify, or connect Premium for full playback.');
     }
     state.socket?.emit('music-control', { action: 'play', track, positionMs: 0 });
-    // Host with Premium also plays the FULL track locally.
-    if (state.premium && state.deviceId && track.uri) playFullTrackOnHost(track.uri);
     openMusicPanelIfClosed();
   }
 
@@ -243,7 +241,7 @@ window.Music = (function () {
     if (track) { state.current = track; showNowPlaying(track); }
 
     // Premium host hears the full track via SDK; skip the shared preview locally.
-    const usePremiumLocal = state.isHost && state.premium && state.deviceId;
+    const usePremiumLocal = false; // Everyone plays the synced preview so non-Premium participants stay in sync with the host.
 
     if (action === 'play') {
       setPlayPauseIcon(true);
