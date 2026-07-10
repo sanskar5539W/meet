@@ -99,15 +99,17 @@ function updateClock() {
 }
 
 /* ---------------------------- Socket + WebRTC -------------------------- */
-const RTC_CONFIG = {
+let RTC_CONFIG = {
   iceServers: [
     { urls: 'stun:stun.l.google.com:19302' },
     { urls: 'stun:stun1.l.google.com:19302' },
-    { urls: 'turn:openrelay.metered.ca:80', username: 'openrelayproject', credential: 'openrelayproject' },
-    { urls: 'turn:openrelay.metered.ca:443', username: 'openrelayproject', credential: 'openrelayproject' },
-    { urls: 'turn:openrelay.metered.ca:443?transport=tcp', username: 'openrelayproject', credential: 'openrelayproject' },
   ],
 };
+// Load STUN/TURN servers from the server so calls connect across networks.
+fetch('/api/turn')
+  .then((r) => r.json())
+  .then((d) => { if (d && Array.isArray(d.iceServers) && d.iceServers.length) RTC_CONFIG = { iceServers: d.iceServers }; })
+  .catch(() => {});
 const peers = new Map();       // socketId -> RTCPeerConnection
 const remoteNames = new Map(); // socketId -> name
 
