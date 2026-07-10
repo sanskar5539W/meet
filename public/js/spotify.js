@@ -187,10 +187,18 @@ window.Music = (function () {
   }
 
   /* ----------------------- host: play for everyone ------------------ */
-  function playForEveryone(track) {
+  async function playForEveryone(track) {
     if (!state.isHost) return;
+    // The Web API no longer returns preview_url, so recover one from the embed.
+    if (!track.previewUrl && track.id) {
+      try {
+        const r = await fetch('/api/spotify/preview' + '?' + 'id' + '=' + encodeURIComponent(track.id));
+        const d = await r.json();
+        if (d && d.previewUrl) track = Object.assign({}, track, { previewUrl: d.previewUrl });
+      } catch (e) {}
+    }
     if (!track.previewUrl && !state.premium) {
-      MeetApp.toast('No 30-sec preview for this track. Connect Premium to play the full song on your device, or open it in Spotify.');
+      MeetApp.toast('No preview available for this track. Open it in Spotify, or connect Premium for full playback.');
     }
     state.socket?.emit('music-control', { action: 'play', track, positionMs: 0 });
     // Host with Premium also plays the FULL track locally.
