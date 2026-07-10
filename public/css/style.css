@@ -399,3 +399,39 @@ button { font-family: var(--font); cursor: pointer; }
   .prejoin { grid-template-columns: 1fr; }
   .side-panel { position: fixed; inset: 0; margin: 0; border-radius: 0; z-index: 60; width: 100%; }
 }
+
+/* ---- Phones: keep the control bar and landing usable on small screens ---- */
+@media (max-width: 600px) {
+  /* Landing */
+  .top-nav { padding: 10px 14px; }
+  .top-nav .nav-time { display: none; }
+  .hero { padding: 12px 20px 40px; gap: 18px; }
+  .hero h1 { font-size: 30px; line-height: 2.4rem; }
+  .hero .subtitle { font-size: 16px; line-height: 1.5rem; margin-bottom: 22px; }
+  .hero .cta-row { flex-direction: column; align-items: stretch; }
+  .join-box { width: 100%; }
+  .join-input { flex: 1; min-width: 0; }
+  .hero-foot { padding: 16px 20px; }
+
+  /* In-call control bar: fit every button on a phone */
+  .controls { padding: 10px 8px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); gap: 6px; }
+  .controls .left { display: none; }
+  .controls .center { flex: 1; gap: 6px; justify-content: center; }
+  .controls .right { flex: 0 0 auto; }
+  .ctrl { width: 42px; height: 42px; }
+  .ctrl-leave { width: 54px; height: 42px; }
+  #btnPresent { display: none; }  /* screen share not supported on mobile browsers */
+
+  /* Stage */
+  .grid-wrap { padding: 8px; }
+  .video-grid { grid-template-columns: 1fr; }
+  .room-top { padding: 10px 12px; }
+  .now-playing-pill { max-width: 210px; font-size: 12px; }
+}
+
+/* ---- Very small phones ---- */
+@media (max-width: 360px) {
+  .ctrl { width: 38px; height: 38px; }
+  .ctrl-leave { width: 48px; height: 38px; }
+  .controls .center { gap: 5px; }
+}
