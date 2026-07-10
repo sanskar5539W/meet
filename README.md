@@ -96,12 +96,39 @@ WebRTC here uses public STUN servers and a full-mesh topology — great for smal
 
 ---
 
+## Deploy a live HTTPS link (Render)
+
+Want to send people a link instead of everyone running it locally? Deploy to [Render](https://render.com) for free. Because the site is served over HTTPS, camera/mic work for everyone, on any device.
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/sanskar5539W/meet)
+
+**Steps:**
+
+1. Push this project to GitHub (already done ✔).
+2. Click the **Deploy to Render** button above, or go to the [Render dashboard](https://dashboard.render.com) → **New → Blueprint** and pick your `meet` repo. Render reads `render.yaml` automatically.
+3. When prompted, enter your two secrets:
+   - `SPOTIFY_CLIENT_ID`
+   - `SPOTIFY_CLIENT_SECRET`
+   (Leave `PUBLIC_URL` blank — the app auto-detects its own URL on Render.)
+4. Click **Apply / Create**. Wait for the build to finish. You'll get a URL like `https://meet-spotify-xxxx.onrender.com`.
+5. **Add the redirect URI to Spotify:** in your [Spotify app settings](https://developer.spotify.com/dashboard), add
+   ```
+   https://YOUR-RENDER-URL.onrender.com/callback
+   ```
+   (use the exact URL Render gave you), and save. This is only needed for the optional host Premium login.
+6. Open your Render URL and share it. 🎉
+
+> On Render's free plan the service sleeps after ~15 minutes of inactivity and takes a few seconds to wake on the next visit. Upgrade to a paid instance to keep it always on.
+
+**Prefer Railway?** It also works: create a project from your GitHub repo, and Railway auto-detects the Node app (`npm install` / `npm start`). Add `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, and set `PUBLIC_URL` to your Railway URL, then add `<that URL>/callback` to your Spotify app.
+
 ## Project structure
 
 ```
 meet-spotify/
 ├─ server.js            Express + Socket.IO: signaling, chat, music sync, Spotify search proxy
 ├─ package.json
+├─ render.yaml          One-click Render deploy blueprint
 ├─ .env.example
 └─ public/
    ├─ index.html        Landing / lobby (Google Meet home)

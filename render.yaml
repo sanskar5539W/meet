@@ -1,0 +1,20 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+# Deploys the Meet + Spotify app as a free Node web service (WebSockets supported).
+services:
+  - type: web
+    name: meet-spotify
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    autoDeploy: true
+    envVars:
+      # Set these two in the Render dashboard when prompted (kept secret, never committed).
+      - key: SPOTIFY_CLIENT_ID
+        sync: false
+      - key: SPOTIFY_CLIENT_SECRET
+        sync: false
+      # PUBLIC_URL is optional — the server auto-detects RENDER_EXTERNAL_URL.
+      # Only set it if you use a custom domain.
+      - key: PUBLIC_URL
+        sync: false

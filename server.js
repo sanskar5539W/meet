@@ -24,7 +24,11 @@ const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' } });
 
 const PORT = process.env.PORT || 3000;
-const PUBLIC_URL = process.env.PUBLIC_URL || `http://127.0.0.1:${PORT}`;
+// PUBLIC_URL is used to build the Spotify OAuth redirect. In production on
+// Render, RENDER_EXTERNAL_URL is provided automatically, so no manual config
+// is needed; locally we fall back to 127.0.0.1.
+const PUBLIC_URL =
+  process.env.PUBLIC_URL || process.env.RENDER_EXTERNAL_URL || `http://127.0.0.1:${PORT}`;
 const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID || '';
 const SPOTIFY_CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET || '';
 const REDIRECT_URI = `${PUBLIC_URL}/callback`;
