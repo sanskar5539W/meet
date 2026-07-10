@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meet — Video calls and meetings for everyone</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='4' fill='%2300ac47'/></svg>" />
+</head>
+<body>
+  <div class="lobby">
+    <!-- Top nav -->
+    <header class="top-nav">
+      <div class="brand">
+        <span class="logo-mark" aria-hidden="true">
+          <svg width="40" height="40" viewBox="0 0 87 72" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#00832d" d="M49.5 36l8.53 9.75 11.47 7.33 2-17.02-2-16.64-11.69 6.44z"/>
+            <path fill="#0066da" d="M0 51.5V66c0 3.315 2.685 6 6 6h14.5l3-10.96-3-9.54-9.95-3z"/>
+            <path fill="#e94235" d="M20.5 0L0 20.5l10.55 3 9.95-3 2.95-9.41z"/>
+            <path fill="#2684fc" d="M20.5 20.5H0v31h20.5z"/>
+            <path fill="#00ac47" d="M82.6 8.68L69.5 19.42v33.99l13.16 10.79c1.97 1.54 4.85.135 4.85-2.37V11c0-2.535-2.945-3.925-4.91-2.32zM49.5 36v15.5h-29V72h43c3.315 0 6-2.685 6-6V53.41z"/>
+            <path fill="#ffba00" d="M63.5 0h-43v20.5h29V36l20-16.57V6c0-3.315-2.685-6-6-6z"/>
+          </svg>
+        </span>
+        <span class="logo-text">Meet</span>
+      </div>
+      <div class="nav-right">
+        <span class="nav-time" id="navTime"></span>
+        <button class="icon-btn" title="Support" aria-label="Support">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
+        </button>
+        <button class="icon-btn" title="Settings" aria-label="Settings">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+        </button>
+        <div style="width:1px;height:24px;background:var(--gm-border)"></div>
+        <button class="icon-btn" title="Google apps" aria-label="Google apps">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6-8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6-8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        </button>
+        <button class="avatar-btn" title="Account">S</button>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <main class="hero">
+      <section class="hero-left">
+        <h1>Video calls and meetings for everyone</h1>
+        <p class="subtitle">Connect, collaborate and celebrate from anywhere with Meet — now with shared Spotify music built right into your call.</p>
+
+        <div class="cta-row">
+          <div style="position:relative">
+            <button class="btn btn-primary" id="newMeetingBtn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+              New meeting
+            </button>
+            <div class="menu hidden" id="newMeetingMenu">
+              <button id="instantMeeting">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#5f6368"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H6v-1.5c0-2 4-3.1 6-3.1s6 1.1 6 3.1V19z"/></svg>
+                Start an instant meeting
+              </button>
+              <button id="scheduleMeeting">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#5f6368"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+                Create a meeting for later
+              </button>
+            </div>
+          </div>
+
+          <div class="join-box">
+            <label class="join-input">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#5f6368"><path d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+              <input id="codeInput" type="text" placeholder="Enter a code or link" autocomplete="off" />
+            </label>
+            <button class="btn btn-text" id="joinBtn" disabled>Join</button>
+          </div>
+        </div>
+
+        <hr class="hero-divider" />
+      </section>
+
+      <!-- Illustration (original, CSS/SVG) -->
+      <section class="hero-right">
+        <div class="illus">
+          <svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="150" cy="150" r="140" fill="#e8f0fe"/>
+            <circle cx="150" cy="150" r="100" fill="#d2e3fc"/>
+            <!-- person -->
+            <circle cx="150" cy="120" r="42" fill="#1a73e8"/>
+            <circle cx="150" cy="108" r="18" fill="#fff"/>
+            <path d="M120 150c0-16 13-26 30-26s30 10 30 26z" fill="#fff"/>
+            <!-- floating music note -->
+            <g transform="translate(206 78)">
+              <circle r="26" fill="#1db954"/>
+              <path d="M-6 -10 v18 a6 6 0 1 1 -4 -5 v-10 l14 -4 v9 a6 6 0 1 1 -4 -5 v-11 z" fill="#fff" transform="translate(2 2)"/>
+            </g>
+            <!-- chat bubble -->
+            <g transform="translate(70 190)">
+              <rect x="-26" y="-16" width="52" height="34" rx="10" fill="#fbbc04"/>
+              <circle cx="-10" cy="1" r="3" fill="#fff"/><circle cx="0" cy="1" r="3" fill="#fff"/><circle cx="10" cy="1" r="3" fill="#fff"/>
+            </g>
+          </svg>
+          <div class="illus-caption">Get a link you can share</div>
+          <p>Click <strong>New meeting</strong> to get a link you can send to the people you want to meet with.</p>
+          <div class="dots"><span class="active"></span><span></span><span></span></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="hero-foot">
+      <a href="#" onclick="return false">Learn more</a> about Meet — a demo clone with real WebRTC video &amp; live Spotify music sharing.
+    </footer>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="/js/app.js"></script>
+</body>
+</html>

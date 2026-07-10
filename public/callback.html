@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connecting Spotify…</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body style="display:grid;place-items:center;height:100vh;font-family:var(--font);text-align:center">
+  <div>
+    <div class="spin" style="width:32px;height:32px;margin:0 auto 16px"></div>
+    <div id="msg" style="color:#5f6368;font-size:15px">Connecting your Spotify account…</div>
+  </div>
+
+  <script>
+    (async function () {
+      const msg = document.getElementById('msg');
+      function finish(payload) {
+        if (window.opener) window.opener.postMessage(payload, location.origin);
+        setTimeout(() => window.close(), 400);
+      }
+      try {
+        const params = new URLSearchParams(location.search);
+        const error = params.get('error');
+        const code = params.get('code');
+        if (error) { msg.textContent = 'Spotify login cancelled.'; return finish({ type: 'spotify-token', error }); }
+        if (!code) { msg.textContent = 'Missing authorization code.'; return; }
+
+        const verifier = localStorage.getItem('sp_verifier');
+        const cfg = await fetch('/api/spotify/config').then((r) => r.json());
+
+        const body = new URLSearchParams({
+          grant_type: 'authorization_code',
+          code,
+          redirect_uri: cfg.redirectUri,
+          client_id: cfg.clientId,
+          code_verifier: verifier || '',
+        });
+
+        const res = await fetch('https://accounts.spotify.com/api/token', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body,
+        });
+        const data = await res.json();
+        if (!res.ok) { msg.textContent = 'Token exchange failed.'; return finish({ type: 'spotify-token', error: data.error_description || 'token_error' }); }
+
+        msg.textContent = 'Connected! You can close this window.';
+        finish({ type: 'spotify-token', access_token: data.access_token, expires_in: data.expires_in });
+      } catch (e) {
+        msg.textContent = 'Something went wrong: ' + e.message;
+      }
+    })();
+  </script>
+</body>
+</html>
