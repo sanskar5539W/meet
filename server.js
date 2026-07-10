@@ -83,7 +83,7 @@ app.get('/api/spotify/search', async (req, res) => {
   try {
     const token = await getAppToken();
     const url =
-      'https://api.spotify.com/v1/search?type=track&limit=20&q=' + encodeURIComponent(q);
+      'https://api.spotify.com/v1/search?type=track&market=US&limit=10&q=' + encodeURIComponent(q);
     const r = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
     if (!r.ok) {
       const t = await r.text();
